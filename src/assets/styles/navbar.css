@@ -1,0 +1,17 @@
+header nav{
+    justify-content: space-between;
+}
+header nav, .nav-left, .nav-right, .nav-left ul{
+    display: flex;
+    align-items: center;
+}
+.nav-left ul, .nav-right ul{
+    list-style: none;
+    gap: 15px;
+}
+.nav-left, .nav-right{
+    gap: 15px;
+}
+.nav-left img{
+    width: 200px;
+}
