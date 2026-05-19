@@ -1,29 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react"
+import { Link, useLocation } from "react-router-dom"
 import "../assets/styles/navbar.css"
 
-function Navbar(){
-    return(
-       <header>
-        <nav>
-            <div className="nav-left">
-                <img src="/images/swiftly logo.png" alt="swiftly logo" className="logo" />
-                <ul>
-                    <li>Personal</li>
-                    <li>Business</li>
-                    <li>Developer</li>
-                </ul>
-            </div>
-            <div className="nav-right">
-                <ul>
-                    <li>Help</li>
-                </ul>
-                <button>Log In</button>
-                <button>Sign Up</button>
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false)
+  const location = useLocation()
 
-            </div>
-        </nav>
-       </header>
-    )
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  return (
+    <header className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
+      <nav className="navbar__inner">
+        <div className="navbar__left">
+          <Link to="/" className="navbar__logo-link">
+            <img src="/images/swiftly logo.png" alt="Swiftly" className="navbar__logo" />
+          </Link>
+          <ul className="navbar__links">
+            <li><Link to="/" className={location.pathname === "/" ? "active" : ""}>Personal</Link></li>
+            <li><a href="#">Business</a></li>
+            <li><a href="#">Developer</a></li>
+          </ul>
+        </div>
+        <div className="navbar__right">
+          <ul className="navbar__links">
+            <li><a href="#">Help</a></li>
+          </ul>
+          <Link to="/login" className="btn btn--ghost">Log In</Link>
+          <Link to="/signup" className="btn btn--primary">Sign Up</Link>
+        </div>
+      </nav>
+    </header>
+  )
 }
 
-export default Navbar;
+export default Navbar
